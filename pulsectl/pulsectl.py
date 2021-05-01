@@ -774,6 +774,14 @@ class Pulse(object):
 		method(obj.index, vol)
 		obj.volume = vol
 
+	def set_sink(self, obj, sink):
+		assert_pulse_object(obj)
+		method = {
+			PulseSinkInputInfo: self.sink_input_move }.get(type(obj))
+		if not method: raise NotImplementedError(type(obj))
+		method(obj.index, sink.index)
+
+
 	def volume_set_all_chans(self, obj, vol):
 		assert_pulse_object(obj)
 		obj.volume.value_flat = vol
